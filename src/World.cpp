@@ -13,16 +13,18 @@ void addComponent(Entity* e, sol::table& componentTable) {
     e->addComponent(std::type_index(typeid(T)), new T(e, componentTable));
 }
 
-Entity* World::loadEntity(sol::table eTree, const std::string& type) {
+void World::loadEntity(sol::object& et, const std::string& type, bool isTile) {
+    sol::table eTree = et;
+
+    //entityMap.insert(std::pair<std::string, Entity*>(e->getType(), e));
+    entityMap.insert(std::pair<std::string, sol::object&>(type, et));
+}
+
+Entity* World::spawnEntity(std::string name, glm::vec2 position) {
+    sol::table eTree = entityMap.find(name)->second;
     Entity* e = new Entity();
 
-    if (eTree["name"]) {
-        e->setType(eTree["name"]);
-        eTree["name"] = nullptr;
-    }
-    else {
-        e->setType(type);
-    }
+    e->setType(name);
 
     for (const auto& key_value_pair : eTree) {
         sol::object key = key_value_pair.first;
@@ -42,27 +44,18 @@ Entity* World::loadEntity(sol::table eTree, const std::string& type) {
         std::cout << "Added " << key.as<std::string>() << " to " << e->getType() << std::endl;
     }
 
-    entityMap.insert(std::pair<std::string, Entity*>(e->getType(), e));
-    return e;
-}
-
-Entity* World::spawnEntity(std::string name, glm::vec2 position) {
-    Entity* e = entityMap.find(name)->second->clone();
     e->setPosition(position);
-    GraphicsComponent* gc = e->get<GraphicsComponent>();
 
     addEntity(e);
     return e;
 }
 
 Entity* World::spawnEntity(std::string name, glm::vec2 position, glm::vec2 scale) {
-    Entity* e = entityMap.find(name)->second->clone();
-    e->setPosition(position);
+    Entity* e = spawnEntity(name, position);
     GraphicsComponent* gc = e->get<GraphicsComponent>();
     if (gc)
         gc->getSprite()->setScale(scale.x, scale.y);
 
-    addEntity(e);
     return e;
 }
 

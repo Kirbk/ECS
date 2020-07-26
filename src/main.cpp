@@ -39,19 +39,29 @@ int main() {
 
     World world;
 
-    world.loadEntity(ghost, "ghost");
-    world.loadEntity(shaggy, "shaggy");
+    world.loadEntity(ghost, "ghost", false);
+    world.loadEntity(shaggy, "shaggy", false);
 
     sol::table tiles = lua["tiles"];
     for (const auto& key_value_pair : tiles) {
         sol::object key = key_value_pair.first;
         sol::object value = key_value_pair.second;
 
-        world.loadEntity(value, key.as<std::string>());
+        std::string test = key.as<std::string>();
+
+        sol::table tile = tiles[key.as<std::string>()];
+        for (const auto& kvp : tile) {
+            std::string ttt = kvp.first.as<std::string>();
+            std::cout << ttt;
+        }
+
+        world.loadEntity(tiles, key.as<std::string>(), true);
     }
 
     Level* level = new Level(&world);
-    level->generateMap(tiles);
+    //level->generateMap(tiles);
+
+    world.spawnEntity("water", glm::vec2(50, 50));
 
     // create the window
     sf::Clock clock;

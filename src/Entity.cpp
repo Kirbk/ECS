@@ -25,17 +25,6 @@ void Entity::setPosition(glm::vec2 pos) {
     gc->getSprite()->setPosition(sf::Vector2(pos.x, pos.y));
 }
 
-Entity* Entity::clone() {
-        Entity* e = new Entity();
-        e->type = this->type;
-        e->addComponent(std::type_index(typeid(GraphicsComponent)), this->get<GraphicsComponent>()->clone());
-        //for (auto const& it : components) {
-           // e->addComponent(it.first, it.second);
-        //}
-
-        return e;
-    }
-
 void Entity::update() {
     
 }

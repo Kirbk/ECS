@@ -16,7 +16,7 @@ public:
 
     void update();
 
-    Entity* loadEntity(sol::table eTree, const std::string& type);
+    void loadEntity(sol::object& eTree, const std::string& type, bool isTile);
 
     void addEntity(Entity* e) {
         entities.push_back(e);
@@ -38,5 +38,5 @@ public:
 
 private:
     std::vector<Entity*> entities;
-    std::map<std::string, Entity*> entityMap;
+    std::map<std::string, sol::object&> entityMap;
 };

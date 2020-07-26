@@ -35,8 +35,6 @@ public:
     void setPosition(glm::vec2 pos);
 
     glm::vec2 getPosition();
-
-    Entity* clone();
 private:
     std::string type;
     std::map<std::type_index, Component*> components;

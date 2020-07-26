@@ -8,7 +8,7 @@
 class Level {
 public:
     Level(World* wrld) : world(wrld) {}
-    void generateMap(sol::table tiles);
+    void generateMap(sol::table& tiles);
 private:
     World* world;
     Entity* map[128][128];

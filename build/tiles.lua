@@ -1,6 +1,5 @@
 tiles = {
-    {
-        name = "water",
+    water = {
         GraphicsComponent = {
             filename = "water.png"
         }
