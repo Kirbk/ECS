@@ -6,6 +6,7 @@
 #include "glm/vec2.hpp"
 
 #include "Entity.h"
+
 #include "sol/sol.hpp"
 
 class World {
@@ -25,17 +26,17 @@ public:
         return entities;
     }
 
-    void generateMap(sol::table& componentTable);
-    void spawnEntity(std::string name, glm::vec2 position);
+    Entity* spawnEntity(std::string name, glm::vec2 position, glm::vec2 scale);
+    Entity* spawnEntity(std::string name, glm::vec2 position);
 
     void printEntityMap () {
         for (auto const& pair : entityMap) {
             std::cout << pair.first << std::endl;
+            
         }
     }
 
 private:
     std::vector<Entity*> entities;
-    Entity* map[128][128];
     std::map<std::string, Entity*> entityMap;
 };

@@ -19,6 +19,7 @@ extern "C" {
 #include "GraphicsComponent.h"
 #include "CollisionComponent.h"
 #include "World.h"
+#include "Level.h"
 
 // TODO: Move to file.
 const unsigned int SCR_WIDTH = 800;
@@ -49,7 +50,8 @@ int main() {
         world.loadEntity(value, key.as<std::string>());
     }
 
-    world.generateMap(tiles);
+    Level* level = new Level(&world);
+    level->generateMap(tiles);
 
     // create the window
     sf::Clock clock;
@@ -84,8 +86,7 @@ int main() {
             for (Entity* e : world.getEntities()) {
                 GraphicsComponent* gc = e->get<GraphicsComponent>();
                 if (gc) {
-                    window.draw(*gc->getSprite());
-                    gc->getSprite()->move(1, 0);
+                    window.draw(*(gc->getSprite()));
                 }
             }
 

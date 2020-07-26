@@ -56,8 +56,23 @@ public:
     sf::Vector2f getScale() {
         return scale;
     }
+
+    GraphicsComponent* clone() {
+        GraphicsComponent* gc = new GraphicsComponent(entity, componentTable);
+        gc->entity = entity;
+        gc->componentTable = componentTable;
+        gc->filename = filename;
+        gc->tex = tex;
+        gc->sprite = sprite;
+        gc->location = location;
+        gc->scale = scale;
+
+        return gc;
+    }
     
 private:
+    Entity* entity;
+    sol::table& componentTable;
     std::string filename;
     sf::Texture tex;
     sf::Sprite sprite;

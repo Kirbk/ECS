@@ -46,19 +46,24 @@ Entity* World::loadEntity(sol::table eTree, const std::string& type) {
     return e;
 }
 
-void World::generateMap(sol::table& componentTable) {
-    for(int i = 0; i < 128; i++) {
-        for (int j = 0; j < 128; j++) {
-            
-        }
-    }
-}
-
-void World::spawnEntity(std::string name, glm::vec2 position) {
+Entity* World::spawnEntity(std::string name, glm::vec2 position) {
     Entity* e = entityMap.find(name)->second->clone();
     e->setPosition(position);
+    GraphicsComponent* gc = e->get<GraphicsComponent>();
 
     addEntity(e);
+    return e;
+}
+
+Entity* World::spawnEntity(std::string name, glm::vec2 position, glm::vec2 scale) {
+    Entity* e = entityMap.find(name)->second->clone();
+    e->setPosition(position);
+    GraphicsComponent* gc = e->get<GraphicsComponent>();
+    if (gc)
+        gc->getSprite()->setScale(scale.x, scale.y);
+
+    addEntity(e);
+    return e;
 }
 
 void World::update() {

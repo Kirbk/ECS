@@ -32,26 +32,12 @@ public:
 
     void update();
 
-    void setPosition(glm::vec2 pos) {
-        this->position = pos;
-    }
+    void setPosition(glm::vec2 pos);
 
-    glm::vec2 getPosition() {
-        return this->position;
-    }
+    glm::vec2 getPosition();
 
-    Entity* clone() {
-        Entity* e = new Entity();
-        e->type = this->type;
-        for (auto const& it : components) {
-            e->addComponent(it.first, it.second);
-        }
-        e->position = this->position;
-
-        return e;
-    }
+    Entity* clone();
 private:
     std::string type;
     std::map<std::type_index, Component*> components;
-    glm::vec2 position;
 };

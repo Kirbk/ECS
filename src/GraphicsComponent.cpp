@@ -4,13 +4,14 @@
 
 #include "GraphicsComponent.h"
 
-GraphicsComponent::GraphicsComponent(Entity* e, sol::table& componentTable) {
-    filename = componentTable["filename"];
+GraphicsComponent::GraphicsComponent(Entity* e, sol::table& ct) : componentTable(ct) {
+    entity = e;
+    filename = ct["filename"];
     tex.loadFromFile(filename);
     sprite.setTexture(tex);
 
-    if (componentTable["scale"]) {
-        scale = sf::Vector2f(componentTable["scale"]["x"], componentTable["scale"]["y"]);
+    if (ct["scale"]) {
+        scale = sf::Vector2f(ct["scale"]["x"], ct["scale"]["y"]);
         std::cout << "ASDFASDFASDFASDFASFASDFASFASDFASFD\n";
     }
 }
